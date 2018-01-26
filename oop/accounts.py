@@ -12,28 +12,28 @@ class Account:
 
     def __init__(self, name, balance):
         self._name = name
-        self._balance = balance
+        self.__balance = balance
         self.transaction_list = []
         print("Acccount created for " + self._name)
-        print("Account started with " + str(self._balance))
-        self.transaction_list.append((Account._current_time(), self._balance))
+        print("Account started with " + str(self.__balance))
+        self.transaction_list.append((Account._current_time(), self.__balance))
 
     def deposit(self, amount):
         if amount > 0:
-            self._balance += amount
+            self.__balance += amount
             self.show_balance()
             self.transaction_list.append((Account._current_time(), amount))
 
     def withdraw(self, amount):
-        if 0 < amount <= self._balance:
-            self._balance -= amount
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
             self.transaction_list.append((Account._current_time(), -amount))
         else:
             print("The amount must be greater than 0 and no more than your account balance")
         self.show_balance()
 
     def show_balance(self):
-        print("Balance is {}".format(self._balance))
+        print("Balance is {}".format(self.__balance))
 
     def show_transactions(self):
         for date, amount in self.transaction_list:
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     steph = Account("Steph", 800)
     steph.show_balance()
 
-    steph.balance(200)
+    # steph.balance(200)
     steph.deposit(100)
     steph.withdraw(200)
     steph.show_transactions()
