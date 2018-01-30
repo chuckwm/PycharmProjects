@@ -21,19 +21,11 @@ class DocType(Tag):
 
 class Head(Tag):
 
-    def __init__(self):
+    def __init__(self, title=None):
         super().__init__('head', '')
-        self._head_contents = []
-
-    def add_head(self, name, contents):
-        new_head = Tag(name, contents)
-        self._head_contents.append(new_head)
-
-    def display(self, file=None):
-        for head in self._head_contents:
-            self.contents += str(head)
-
-        super().display(file=file)
+        if title:
+            self._title_tag = Tag('title', title)
+            self.contents = str(self._title_tag)
 
 
 class Body(Tag):
@@ -55,13 +47,10 @@ class Body(Tag):
 
 class HtmlDoc(object):
 
-    def __init__(self):
+    def __init__(self, title=None):
         self._doc_type = DocType()
-        self._head = Head()
+        self._head = Head(title)
         self._body = Body()
-
-    def add_head(self, name, contents):
-        self._head.add_head(name, contents)
 
     def add_tag(self, name, contents):
         self._body.add_tag(name, contents)
@@ -75,8 +64,7 @@ class HtmlDoc(object):
 
 
 if __name__ == '__main__':
-    my_page = HtmlDoc()
-    my_page.add_head('title', 'Test Document title')
+    my_page = HtmlDoc('Demo HTML Document')
     my_page.add_tag('h1', 'Main heading')
     my_page.add_tag('h2', 'sub-heading')
     my_page.add_tag('p', 'This is a paragraph that will appear on the page')
@@ -84,14 +72,10 @@ if __name__ == '__main__':
         my_page.display(file=test_doc)
 
 
-new_body = Body()
-new_body.add_tag('h1', 'Aggregation')
-new_body.add_tag('p', "Unlike <strong>composition</strong>, agregation uses existing instances"
-                      " of objects to buid up another object.")
-new_body.add_tag('p', "The composed object doesn't actually own the object that it's composed of"
-                      " - if it's destroyed, those objects continue to exist.")
 
-# give out document new content by switchint it's body
-my_page._body = new_body
-with open('test2.html', 'w') as test_doc:
-    my_page.display(file=test_doc)
+
+
+
+
+
+
